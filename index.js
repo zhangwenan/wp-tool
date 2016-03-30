@@ -305,10 +305,12 @@ wp.prototype.new_post = function(article){
         },
         function(err,httpResponse,body){
           if(err){
-            //reject();
+
             self.msg = self.getCurrTime() + ',[' + self.user + ']开始发布文章失败';
             wp_logger.info(self.msg);
             console_logger.info(self.msg);
+
+            reject();
           }
           else{
             // 302跳转到 http://xxxx.com/wp-admin/post.php?post=18&action=edit&message=6
@@ -324,7 +326,7 @@ wp.prototype.new_post = function(article){
     })
   };
 
-  self.login().then(p_get_user_info).then(post);
+  return self.login().then(p_get_user_info).then(post);
 };
 
 
